@@ -5,7 +5,7 @@ class ContactPage {
     async navigate() {
       await this.page.goto('https://crtweb.ru/contacts');
     }
-    async login() {
+    async someMethod() {
 
     }
   }
