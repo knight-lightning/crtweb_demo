@@ -1,8 +1,8 @@
-name: renue-fns
+name: crtweb-demo
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   build:
