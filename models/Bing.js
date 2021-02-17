@@ -9,7 +9,7 @@ class BingPage {
         await this.page.fill('#sb_form_q', request) // Вбиваем наш поисковый запрос
         await this.page.keyboard.press('Enter') //Жмём Enter
 
-        await this.page.click('li.b_algo div h2 a') // Переходим на искомую страницу
+        await this.page.click('"crtweb.ru - Аутсорсинг веб и ..."') // Переходим на искомую страницу
     }
 }
 
