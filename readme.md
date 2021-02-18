@@ -35,5 +35,13 @@ jest - указываем наш тест раннер
 
 --detectOpenHandles и --forceExit - для избегания проблем с асинхронным кодом
 
-#### CI
+## CI
+
+#### github actions
 .github\workflows\nodejs.yml - пример запуска тестов в Github Actions
+
+#### docker
+docker run -it --rm --ipc=host playwright_test:v1
+
+В интерективном режиме:
+npm test

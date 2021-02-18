@@ -1,6 +1,30 @@
 FROM ubuntu:bionic
 
 # === INSTALL BROWSER DEPENDENCIES ===
+# Install gstreamer and plugins to support video playback in WebKit.
+# Install WebKit dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libwoff1 \
+    libopus0 \
+    libwebp6 \
+    libwebpdemux2 \
+    libenchant1c2a \
+    libgudev-1.0-0 \
+    libsecret-1-0 \
+    libhyphen0 \
+    libgdk-pixbuf2.0-0 \
+    libegl1 \
+    libnotify4 \
+    libxslt1.1 \
+    libevent-2.1-6 \
+    libgles2 \
+    libvpx5 \
+    libxcomposite1 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libepoxy0 \
+    libgtk-3-0 \
+    libharfbuzz-icu0
 
 # Install gstreamer and plugins to support video playback in WebKit.
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -18,10 +42,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-noto-color-emoji \
     libxtst6
 
+# Install Firefox dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libdbus-glib-1-2 \
+    libxt6
+
+# Install ffmpeg to bring in audio and video codecs necessary for playing videos in Firefox.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg
+
 # (Optional) Install XVFB if there's a need to run browsers in headful mode
 RUN apt-get update && apt-get install -y --no-install-recommends \
     xvfb
-
 # === INSTALL Node.js ===
 
 # Install node15
@@ -30,8 +62,7 @@ RUN apt-get update && apt-get install -y curl && \
     apt-get install -y nodejs
 
 # Feature-parity with node.js base images.
-RUN apt-get update && apt-get install -y --no-install-recommends git ssh && \
-    npm install -g yarn
+RUN apt-get update && apt-get install -y --no-install-recommends git ssh
 
 # Create the pwuser (we internally create a symlink for the pwuser and the root user)
 RUN adduser pwuser
@@ -41,20 +72,12 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 RUN mkdir /ms-playwright && chmod 777 /ms-playwright
 
-# 1. Add tip-of-tree Playwright package to install its browsers.
-#    The package should be built beforehand from tip-of-tree Playwright.
-COPY ./playwright.tar.gz /tmp/playwright.tar.gz
-
-# 2. Install playwright and then delete the installation.
-#    Browsers will remain downloaded in `/ms-playwright`.
-RUN su pwuser -c "mkdir /tmp/pw && cd /tmp/pw && npm init -y && \
-    npm i /tmp/playwright.tar.gz" && \
-    rm -rf /tmp/pw && rm /tmp/playwright.tar.gz
-
+WORKDIR /home/pwuser/
 # Копируем файлы
-COPY . /home/crtwebTest
-WORKDIR /home/crtwebTest
+RUN git clone https://github.com/knight-lightning/crtweb_demo.git
+WORKDIR /home/pwuser/crtweb_demo/
 
+RUN npm install -g npm@7.5.4
 # Устанавливааем зависимости проекта
 RUN npm install
 
