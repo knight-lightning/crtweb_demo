@@ -14,8 +14,11 @@ describe('Find crtweb.ru, follow contacts', () => {
                     height: 1080,
                     locale: 'ru-RU',
                     permissions: ['geolocation'],
-                    geolocation: { latitude: 51.72, longitude: 36.18}
-                 }
+                    geolocation: {
+                        latitude: 51.72,
+                        longitude: 36.18
+                    }
+                }
             })
             const page = await context.newPage()
 
@@ -36,7 +39,7 @@ describe('Find crtweb.ru, follow contacts', () => {
 
             // Ждём  2 сек и делаем скрин
             await page.waitForTimeout(2000)
-            await page.screenshot({ path: `screens/MainPage-${browserType}.png`})
+            await page.screenshot({ path: `screens/MainPage-${browserType}.png` })
 
             // Переходим по клику на страницу контактов
             await page.click('"Контакты"')
