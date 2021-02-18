@@ -4,12 +4,18 @@ const { MainPage } = require('../models/MainPage')
 
 describe('Find crtweb.ru, follow contacts', () => {
     test('should display correct contacts', async () => {
-        for (const browserType of ['chromium', 'firefox', 'webkit']) {
+        for (const browserType of ['chromium']) {
             const browser = await playwright[browserType].launch({
-                headless: true, slowMo: 250
+                headless: false, slowMo: 250
             })
             const context = await browser.newContext({
-                viewport: { width: 1920, height: 1080, locale: 'ru-RU' }
+                viewport: {
+                    width: 1920,
+                    height: 1080,
+                    locale: 'ru-RU',
+                    permissions: ['geolocation'],
+                    geolocation: { latitude: 51.72, longitude: 36.18}
+                 }
             })
             const page = await context.newPage()
 
