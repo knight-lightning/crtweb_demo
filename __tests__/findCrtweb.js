@@ -6,7 +6,7 @@ describe('Find crtweb.ru, follow contacts', () => {
     test('should display correct contacts', async () => {
         for (const browserType of ['chromium', 'firefox', 'webkit']) {
             const browser = await playwright[browserType].launch({
-                headless: false, slowMo: 250
+                headless: true, slowMo: 250
             })
             const context = await browser.newContext({
                 viewport: { width: 1920, height: 1080 }
