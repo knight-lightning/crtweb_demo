@@ -4,55 +4,55 @@ const { MainPage } = require('../models/MainPage')
 
 describe('Find crtweb.ru, follow contacts', () => {
     test('should display correct contacts', async () => {
-        for (const browserType of ['chromium']) {
-            const browser = await playwright[browserType].launch({
-                headless: true, slowMo: 250
-            })
-            const context = await browser.newContext({
-                viewport: {
-                    width: 1920,
-                    height: 1080,
-                    locale: 'ru-RU',
-                    permissions: ['geolocation'],
-                    geolocation: { latitude: 51.72, longitude: 36.18 }
-                }
-            })
-            const page = await context.newPage()
 
-            // Page object модель
-            const bingPage = new BingPage(page)
+        const browser = await playwright.chromium.launch({
+            headless: true, slowMo: 250
+        })
+        const context = await browser.newContext({
+            viewport: {
+                width: 1920,
+                height: 1080,
+                locale: 'ru-RU',
+                permissions: ['geolocation'],
+                geolocation: { latitude: 51.72, longitude: 36.18 }
+            }
+        })
+        const page = await context.newPage()
 
-            await bingPage.navigate()
-            await page.waitForTimeout(2000)
-            await bingPage.searchAndFollow('crtweb.ru')
-            await page.waitForTimeout(2000)
-            // Проверяем, что у нас есть заголовок - мы на нужной странице
-            const content = await page.textContent('text="Надежные, быстрые, как свои "')
-            expect(content).toBe('Надежные, быстрые, как свои ')
+        // Page object модель
+        const bingPage = new BingPage(page)
 
-            // Пример под page object для заполнения формы
-            // const mainPage = new MainPage(page)
-            // await mainPage.sendForm()
+        await bingPage.navigate()
+        await page.waitForTimeout(2000)
+        await bingPage.searchAndFollow('crtweb.ru')
+        await page.waitForTimeout(2000)
+        // Проверяем, что у нас есть заголовок - мы на нужной странице
+        const content = await page.textContent('text="Надежные, быстрые, как свои "')
+        expect(content).toBe('Надежные, быстрые, как свои ')
 
-            // Ждём  2 сек и делаем скрин
-            await page.waitForTimeout(2000)
-            await page.screenshot({ path: `screens/MainPage-${browserType}.png` })
+        // Пример под page object для заполнения формы
+        // const mainPage = new MainPage(page)
+        // await mainPage.sendForm()
 
-            // Переходим по клику на страницу контактов
-            await page.click('"Контакты"')
+        // Ждём  2 сек и делаем скрин
+        await page.waitForTimeout(2000)
+        await page.screenshot({ path: `screens/MainPage.png` })
 
-            // Проверяем корректность телефона
-            const phone = await page.textContent('"+7 (499) 113-68-89"')
-            expect(phone).toBe('+7 (499) 113-68-89')
+        // Переходим по клику на страницу контактов
+        await page.click('"Контакты"')
 
-            // Проверяем корректность почты
-            const mail = await page.textContent('"mail@crtweb.ru"')
-            expect(mail).toBe('mail@crtweb.ru')
+        // Проверяем корректность телефона
+        const phone = await page.textContent('"+7 (499) 113-68-89"')
+        expect(phone).toBe('+7 (499) 113-68-89')
 
-            await page.screenshot({ path: `screens/ContactPage-${browserType}.png` })
-            await page.close()
-            await context.close()
-            await browser.close()
-        }
+        // Проверяем корректность почты
+        const mail = await page.textContent('"mail@crtweb.ru"')
+        expect(mail).toBe('mail@crtweb.ru')
+
+        await page.screenshot({ path: `screens/ContactPage.png` })
+        await page.close()
+        await context.close()
+        await browser.close()
+
     })
 })
