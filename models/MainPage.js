@@ -3,7 +3,7 @@ class MainPage {
     this.page = page
   }
   async navigate() {
-    await this.page.goto('https://stage.codifier.renue.ru');
+    await this.page.goto('https://crtweb.ru')
   }
   async sendForm() {
     // Заполняем форму на главной

@@ -50,8 +50,9 @@ describe('Find crtweb.ru, follow contacts', () => {
             expect(mail).toBe('mail@crtweb.ru')
 
             await page1.screenshot({ path: `screens/ContactPage-${browserType}.png` })
-            await page.close()
+
             await page1.close()
+            await page.close()
             await context.close()
             await browser.close()
         }

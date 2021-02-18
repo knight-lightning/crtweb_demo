@@ -15,6 +15,7 @@ jobs:
           node-version: 15.x
       - name: 'npm:install'
         run: npm install
+      - run: sudo apt update
       - name: test
         run: npm test
       - uses: actions/upload-artifact@v2
