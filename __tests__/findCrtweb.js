@@ -23,6 +23,7 @@ describe('Find crtweb.ru, follow contacts', () => {
             const bingPage = new BingPage(page)
 
             await bingPage.navigate()
+            await page.waitForTimeout(2000)
             await bingPage.searchAndFollow('crtweb.ru')
             await page.waitForTimeout(2000)
             // Проверяем, что у нас есть заголовок - мы на нужной странице
