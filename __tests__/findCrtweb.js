@@ -14,10 +14,7 @@ describe('Find crtweb.ru, follow contacts', () => {
                     height: 1080,
                     locale: 'ru-RU',
                     permissions: ['geolocation'],
-                    geolocation: {
-                        latitude: 51.72,
-                        longitude: 36.18
-                    }
+                    geolocation: { latitude: 51.72, longitude: 36.18 }
                 }
             })
             const page = await context.newPage()
