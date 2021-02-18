@@ -6,6 +6,7 @@ class BingPage {
         await this.page.goto('https://www.google.com/') //Переходим в поисковик
     }
     async searchAndFollow(request) {
+
         await this.page.fill('input[aria-label="Найти"]', request) // Вбиваем наш поисковый запрос
         await this.page.keyboard.press('Enter') //Жмём Enter
 
