@@ -1,6 +1,6 @@
 const playwright = require('playwright')
 const { BingPage } = require('../models/Bing')
-const { MainPage } = require('../models/Bing')
+const { MainPage } = require('../models/MainPage')
 
 describe('Find crtweb.ru, follow contacts', () => {
     test('should display correct contacts', async () => {
@@ -9,7 +9,7 @@ describe('Find crtweb.ru, follow contacts', () => {
                 headless: true, slowMo: 250
             })
             const context = await browser.newContext({
-                viewport: { width: 1920, height: 1080 }
+                viewport: { width: 1920, height: 1080, locale: 'ru-RU' }
             })
             const page = await context.newPage()
 
