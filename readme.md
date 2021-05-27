@@ -45,3 +45,5 @@ docker run -it --rm --ipc=host playwright_test:v1
 
 В интерективном режиме:
 npm test
+
+1
